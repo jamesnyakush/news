@@ -1,6 +1,5 @@
 package com.jamesnyakush.news.ui.component
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -19,16 +18,22 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 
 @Composable
-fun NewsCard() {
+fun NewsCard(
+    title: String,
+    description: String,
+    urlToImage: String?,
+    publishedAt: String,
+) {
 
-    Column(modifier = Modifier
-        .padding(8.dp)
-        .fillMaxWidth()
+    Column(
+        modifier = Modifier
+            .padding(8.dp)
+            .fillMaxWidth()
     ) {
 
         //Image
         AsyncImage(
-            model = "https://static.dw.com/image/62282035_6.jpg",
+            model = urlToImage,
             contentDescription = null,
             modifier = Modifier
                 .height(200.dp)
@@ -37,11 +42,11 @@ fun NewsCard() {
                 .clip(RoundedCornerShape(8)),
             contentScale = ContentScale.FillWidth,
 
-        )
+            )
 
         //Title
         Text(
-            text = "WolframAlpha.Wolfram has formulas to use for artificial neural networks",
+            text = title,
             modifier = Modifier.padding(8.dp),
             color = Color.Black,
             fontSize = 18.sp
@@ -49,7 +54,7 @@ fun NewsCard() {
 
         // Description
         Text(
-            text = "Dot-product matrix formulas for ANN's signal aggregator functions Dot-product matrix formulas for ANN's signal aggregator functions Dot-product matrix formulas for ANN's signal aggregator functions",
+            text = description,
             modifier = Modifier.padding(8.dp),
             color = Color.DarkGray,
             textAlign = TextAlign.Start,
@@ -58,7 +63,7 @@ fun NewsCard() {
 
         //Published At
         Text(
-            text = "2024-02-20T19:29:22Z",
+            text = publishedAt,
             modifier = Modifier.padding(8.dp),
             color = Color.Gray,
             textAlign = TextAlign.Start,
@@ -70,5 +75,5 @@ fun NewsCard() {
 @Preview
 @Composable
 fun NewsCardPreview() {
-    NewsCard()
+    NewsCard("", "", "", "")
 }

@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.jamesnyakush.news.ui.component.NewsCard
 import com.jamesnyakush.news.ui.component.NewsDetailCard
+import com.jamesnyakush.news.ui.screen.NewsScreen
 import com.jamesnyakush.news.ui.theme.NewsTheme
 
 class MainActivity : ComponentActivity() {
@@ -23,7 +24,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    NewsDetailCard()
+                    NewsScreen()
                 }
             }
         }

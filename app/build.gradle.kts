@@ -36,8 +36,14 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+//    buildFeatures {
+//        buildConfig = true
+//    }
     buildFeatures {
         compose = true
+        buildConfig = true
+
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -68,4 +74,18 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
     implementation("io.coil-kt:coil-compose:2.5.0")
+
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    implementation("io.insert-koin:koin-android:3.2.0")
+    implementation("io.insert-koin:koin-androidx-compose:3.2.0")
+    implementation("io.insert-koin:koin-core:3.2.0")
+
+    debugImplementation("com.github.chuckerteam.chucker:library:4.0.0")
+    releaseImplementation("com.github.chuckerteam.chucker:library-no-op:4.0.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.8.1")
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
+    implementation("com.jakewharton.timber:timber:5.0.1")
+
 }
