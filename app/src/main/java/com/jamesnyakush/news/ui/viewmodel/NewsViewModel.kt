@@ -23,9 +23,13 @@ class NewsViewModel(
     fun getTopHeadlines(
         country: String, apiKey: String
     ) = viewModelScope.launch {
-        newsRepository.getTopHeadlines(country = country, apiKey = apiKey).collect { response ->
+
+        newsRepository.getTopHeadlines(
+            country = country, apiKey = apiKey
+        ).collect { response ->
             _newsResponse.value = response
         }
+
     }
 
 }

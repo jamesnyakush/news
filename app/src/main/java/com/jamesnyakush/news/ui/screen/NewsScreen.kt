@@ -36,7 +36,6 @@ fun NewsScreen() {
                         )
                     }
                 }
-
             }
         }
 
