@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jamesnyakush.news.data.Response
+import com.jamesnyakush.news.data.model.Article
 import com.jamesnyakush.news.data.model.NewsResponse
 import com.jamesnyakush.news.data.repository.NewsRepository
 import kotlinx.coroutines.launch
@@ -30,6 +31,10 @@ class NewsViewModel(
             _newsResponse.value = response
         }
 
+    }
+
+    fun upsert(article: List<Article>) = viewModelScope.launch {
+        newsRepository.upsertNews(article)
     }
 
 }

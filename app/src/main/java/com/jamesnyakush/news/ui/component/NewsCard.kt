@@ -19,10 +19,10 @@ import coil.compose.AsyncImage
 
 @Composable
 fun NewsCard(
-    title: String,
-    description: String,
+    title: String?,
+    description: String?,
     urlToImage: String?,
-    publishedAt: String,
+    publishedAt: String?,
 ) {
 
     Column(
@@ -45,35 +45,41 @@ fun NewsCard(
             )
 
         //Title
-        Text(
-            text = title,
-            modifier = Modifier.padding(8.dp),
-            color = Color.Black,
-            fontSize = 18.sp
-        )
+        if (title != null) {
+            Text(
+                text = title,
+                modifier = Modifier.padding(8.dp),
+                color = Color.Black,
+                fontSize = 18.sp
+            )
+        }
 
         // Description
-        Text(
-            text = description,
-            modifier = Modifier.padding(8.dp),
-            color = Color.DarkGray,
-            textAlign = TextAlign.Start,
-            fontSize = 16.sp
-        )
+        if (description != null) {
+            Text(
+                text = description,
+                modifier = Modifier.padding(8.dp),
+                color = Color.DarkGray,
+                textAlign = TextAlign.Start,
+                fontSize = 16.sp
+            )
+        }
 
         //Published At
-        Text(
-            text = publishedAt,
-            modifier = Modifier.padding(8.dp),
-            color = Color.Gray,
-            textAlign = TextAlign.Start,
-            fontSize = 12.sp
-        )
+        if (publishedAt != null) {
+            Text(
+                text = publishedAt,
+                modifier = Modifier.padding(8.dp),
+                color = Color.Gray,
+                textAlign = TextAlign.Start,
+                fontSize = 12.sp
+            )
+        }
     }
 }
 
 @Preview
 @Composable
 fun NewsCardPreview() {
-    NewsCard("", "", "", "")
+    NewsCard("", "","","" )
 }

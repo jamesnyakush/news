@@ -26,6 +26,7 @@ class News : Application() {
                 val modules = mutableListOf<Module>().apply {
                     addAll(dataModule)
                     add(viewModelModule)
+                    add(dbModule)
                 }
                 modules(modules)
             }

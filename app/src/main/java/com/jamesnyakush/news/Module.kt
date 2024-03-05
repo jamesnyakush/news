@@ -1,9 +1,12 @@
 package com.jamesnyakush.news
 
+import androidx.room.Room
 import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.chuckerteam.chucker.api.RetentionManager
 import com.google.gson.GsonBuilder
+import com.jamesnyakush.news.data.db.NewsDAO
+import com.jamesnyakush.news.data.db.NewsDB
 import com.jamesnyakush.news.data.network.ApiClient
 import com.jamesnyakush.news.data.repository.NewsRepository
 import com.jamesnyakush.news.data.repository.NewsRepositoryImpl
@@ -11,6 +14,7 @@ import com.jamesnyakush.news.ui.viewmodel.NewsViewModel
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.BuildConfig
+import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.module.Module
@@ -24,8 +28,22 @@ val viewModelModule = module {
     viewModel { NewsViewModel(get()) }
 }
 
+val dbModule = module {
+    single {
+        Room.databaseBuilder(
+            androidApplication(),
+            NewsDB::class.java,
+            "news.db"
+        )
+            .fallbackToDestructiveMigration()
+            .build()
+    }
+
+    single { get<NewsDB>().newsDao() }
+}
+
 val repositoryModule: Module = module {
-    single<NewsRepository> { NewsRepositoryImpl(get()) }
+    single<NewsRepository> { NewsRepositoryImpl(get(),get()) }
 }
 
 val networkingModules: Module = module {
@@ -70,6 +88,8 @@ val networkingModules: Module = module {
             .client(get())
             .build()
     }
+
+
 }
 
 val apiModules: Module = module {

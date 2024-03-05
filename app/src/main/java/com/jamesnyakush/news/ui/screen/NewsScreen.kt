@@ -27,18 +27,26 @@ fun NewsScreen() {
 
             LazyColumn {
                 newsResponse.data?.articles?.let { articles ->
-                    items(articles) {article ->
-                        NewsCard(
-                            title = article.title,
-                            description = article.description,
-                            urlToImage = article.urlToImage,
-                            publishedAt = article.publishedAt
-                        )
+                    items(articles) { article ->
+
+                        if (article.title != "[Removed]"){
+                            NewsCard(
+                                title = article.title,
+                                description = article.description,
+                                urlToImage = article.urlToImage,
+                                publishedAt = article.publishedAt
+                            )
+                        }
+
                     }
+                    vm.upsert(articles)
                 }
             }
         }
 
         is Response.Failure -> {}
     }
+
 }
+
+
