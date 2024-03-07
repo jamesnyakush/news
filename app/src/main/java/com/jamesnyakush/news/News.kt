@@ -50,7 +50,7 @@ class News : Application() {
                 }
             })
         } else {
-            //Timber.plant(CrashlyticsTree())
+            Timber.plant(CrashlyticsTree())
         }
     }
 
