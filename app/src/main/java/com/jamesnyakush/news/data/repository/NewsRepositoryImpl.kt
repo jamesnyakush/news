@@ -7,6 +7,7 @@ import com.jamesnyakush.news.data.model.NewsResponse
 import com.jamesnyakush.news.data.network.ApiClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 
@@ -16,13 +17,13 @@ class NewsRepositoryImpl constructor(
 ) : NewsRepository {
     override suspend fun getTopHeadlines(
         country: String, apiKey: String
-    ): Flow<Response<NewsResponse>> = flow {
+    ): Flow<Response<NewsResponse>> = channelFlow {
         try {
-            emit(Response.Loading)
+            trySend(Response.Loading)
             val result = apiClient.getNews(country = country, apiKey = apiKey)
-            emit(Response.Success(result))
+            trySend(Response.Success(result))
         } catch (e: Exception) {
-            emit(Response.Failure(e))
+            trySend(Response.Failure(e))
         }
     }
 

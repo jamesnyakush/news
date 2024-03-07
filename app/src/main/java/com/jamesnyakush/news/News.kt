@@ -1,6 +1,11 @@
 package com.jamesnyakush.news
 
 import android.app.Application
+import androidx.work.Constraints
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.NetworkType
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -8,6 +13,7 @@ import org.koin.core.error.KoinAppAlreadyStartedException
 import org.koin.core.logger.Level
 import org.koin.core.module.Module
 import timber.log.Timber
+import java.util.concurrent.TimeUnit
 
 class News : Application() {
 
@@ -16,6 +22,7 @@ class News : Application() {
 
         initKoin()
         initTimber()
+        initWorker()
     }
 
     private fun initKoin() {
@@ -45,5 +52,23 @@ class News : Application() {
         } else {
             //Timber.plant(CrashlyticsTree())
         }
+    }
+
+
+   private fun initWorker() {
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
+
+        val notificationWorkRequest =
+            PeriodicWorkRequestBuilder<NewsWorker>(1, TimeUnit.MINUTES)
+                .setConstraints(constraints)
+                .build()
+
+        WorkManager.getInstance(applicationContext).enqueueUniquePeriodicWork(
+            "notificationWorkTag",
+            ExistingPeriodicWorkPolicy.KEEP,
+            notificationWorkRequest
+        )
     }
 }

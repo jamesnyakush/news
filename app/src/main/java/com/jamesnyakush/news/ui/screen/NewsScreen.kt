@@ -5,10 +5,19 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.work.Constraints
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
+import com.jamesnyakush.news.NewsWorker
 import com.jamesnyakush.news.data.Response
 import com.jamesnyakush.news.ui.component.NewsCard
 import com.jamesnyakush.news.ui.viewmodel.NewsViewModel
 import org.koin.androidx.compose.koinViewModel
+import timber.log.Timber
+import java.util.concurrent.TimeUnit
 
 @Composable
 fun NewsScreen() {
@@ -47,6 +56,12 @@ fun NewsScreen() {
         is Response.Failure -> {}
     }
 
+
+
 }
+
+
+
+
 
 
