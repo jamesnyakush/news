@@ -18,13 +18,13 @@ class NewsWorker(
         var result: Result = Result.Failure()
 
 
-        result = Result.Success()
 
-        Timber.d("News Loading.......")
+        NotificationHelper(applicationContext).createNotification(
+            "Testy","Doneth"
+        )
+        //result = Result.Success()
 
-
-
-        return result
+        return Result.Success()
 
     }
 

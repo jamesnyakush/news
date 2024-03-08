@@ -22,7 +22,7 @@ class News : Application() {
 
         initKoin()
         initTimber()
-        initWorker()
+       // initWorker()
     }
 
     private fun initKoin() {
@@ -55,20 +55,20 @@ class News : Application() {
     }
 
 
-   private fun initWorker() {
-        val constraints = Constraints.Builder()
-            .setRequiredNetworkType(NetworkType.CONNECTED)
-            .build()
-
-        val notificationWorkRequest =
-            PeriodicWorkRequestBuilder<NewsWorker>(1, TimeUnit.MINUTES)
-                .setConstraints(constraints)
-                .build()
-
-        WorkManager.getInstance(applicationContext).enqueueUniquePeriodicWork(
-            "notificationWorkTag",
-            ExistingPeriodicWorkPolicy.KEEP,
-            notificationWorkRequest
-        )
-    }
+//   private fun initWorker() {
+//        val constraints = Constraints.Builder()
+//            .setRequiredNetworkType(NetworkType.CONNECTED)
+//            .build()
+//
+//        val notificationWorkRequest =
+//            PeriodicWorkRequestBuilder<NewsWorker>(1, TimeUnit.MINUTES)
+//                .setConstraints(constraints)
+//                .build()
+//
+//        WorkManager.getInstance(applicationContext).enqueueUniquePeriodicWork(
+//            "notificationWorkTag",
+//            ExistingPeriodicWorkPolicy.KEEP,
+//            notificationWorkRequest
+//        )
+//    }
 }
