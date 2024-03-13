@@ -6,6 +6,11 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
+import coil.ImageLoader
+import coil.ImageLoaderFactory
+import coil.disk.DiskCache
+import coil.memory.MemoryCache
+import coil.util.DebugLogger
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -15,14 +20,13 @@ import org.koin.core.module.Module
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
-class News : Application() {
+class News : Application(), ImageLoaderFactory {
 
     override fun onCreate() {
         super.onCreate()
 
         initKoin()
         initTimber()
-       // initWorker()
     }
 
     private fun initKoin() {
@@ -54,21 +58,21 @@ class News : Application() {
         }
     }
 
-
-//   private fun initWorker() {
-//        val constraints = Constraints.Builder()
-//            .setRequiredNetworkType(NetworkType.CONNECTED)
-//            .build()
-//
-//        val notificationWorkRequest =
-//            PeriodicWorkRequestBuilder<NewsWorker>(1, TimeUnit.MINUTES)
-//                .setConstraints(constraints)
-//                .build()
-//
-//        WorkManager.getInstance(applicationContext).enqueueUniquePeriodicWork(
-//            "notificationWorkTag",
-//            ExistingPeriodicWorkPolicy.KEEP,
-//            notificationWorkRequest
-//        )
-//    }
+    override fun newImageLoader(): ImageLoader {
+        return ImageLoader.Builder(this)
+            .memoryCache {
+                MemoryCache.Builder(this)
+                    .maxSizePercent(0.20)
+                    .build()
+            }
+            .diskCache {
+                DiskCache.Builder()
+                    .directory(cacheDir.resolve("image_cache"))
+                    .maxSizeBytes(5 * 1024 * 1024)
+                    .build()
+            }
+            .logger(DebugLogger())
+            .respectCacheHeaders(false)
+            .build()
+    }
 }

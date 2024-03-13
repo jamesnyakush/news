@@ -11,11 +11,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import coil.request.CachePolicy
+import coil.request.ErrorResult
+import coil.request.ImageRequest
+import coil.request.SuccessResult
+import com.jamesnyakush.news.R
+import kotlinx.coroutines.Dispatchers
 
 @Composable
 fun NewsCard(
@@ -30,11 +38,40 @@ fun NewsCard(
             .padding(8.dp)
             .fillMaxWidth()
     ) {
+        val context = LocalContext.current
+        val placeholder = R.drawable.placeholder
+        val imageUrl = urlToImage
+
+        // Build an ImageRequest with Coil
+        val listener = object : ImageRequest.Listener {
+            override fun onError(request: ImageRequest, result: ErrorResult) {
+                super.onError(request, result)
+            }
+
+            override fun onSuccess(request: ImageRequest, result: SuccessResult) {
+                super.onSuccess(request, result)
+            }
+        }
+
+
+        val imageRequest = ImageRequest.Builder(context)
+            .data(imageUrl)
+            .listener(listener)
+            .dispatcher(Dispatchers.IO)
+            .memoryCacheKey(imageUrl)
+            .diskCacheKey(imageUrl)
+            .placeholder(placeholder)
+            .error(placeholder)
+            .fallback(placeholder)
+            .diskCachePolicy(CachePolicy.ENABLED)
+            .memoryCachePolicy(CachePolicy.ENABLED)
+            .build()
 
         //Image
         AsyncImage(
-            model = urlToImage,
+            model = imageRequest,
             contentDescription = null,
+            placeholder = painterResource(R.drawable.placeholder),
             modifier = Modifier
                 .height(200.dp)
                 .fillMaxWidth()

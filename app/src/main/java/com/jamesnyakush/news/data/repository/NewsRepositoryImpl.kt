@@ -12,8 +12,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 
 class NewsRepositoryImpl constructor(
-    private var apiClient: ApiClient,
-    private val newsDAO: NewsDAO
+    private var apiClient: ApiClient, private val newsDAO: NewsDAO
 ) : NewsRepository {
     override suspend fun getTopHeadlines(
         country: String, apiKey: String
@@ -27,7 +26,11 @@ class NewsRepositoryImpl constructor(
         }
     }
 
-    override suspend fun upsertNews(article: List<Article>)  = withContext(Dispatchers.IO){
-            newsDAO.upsertNews(article = article)
+    override suspend fun upsertNews(article: List<Article>) = withContext(Dispatchers.IO) {
+        newsDAO.upsertNews(article = article)
+    }
+
+    override fun getSavedArticle(): Flow<List<Article>> {
+       return newsDAO.getSavedArticle()
     }
 }

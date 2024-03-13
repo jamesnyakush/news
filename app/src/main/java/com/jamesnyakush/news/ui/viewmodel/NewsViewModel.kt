@@ -8,6 +8,7 @@ import com.jamesnyakush.news.data.Response
 import com.jamesnyakush.news.data.model.Article
 import com.jamesnyakush.news.data.model.NewsResponse
 import com.jamesnyakush.news.data.repository.NewsRepository
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class NewsViewModel(
@@ -37,4 +38,8 @@ class NewsViewModel(
         newsRepository.upsertNews(article)
     }
 
+
+    fun getArticles(): Flow<List<Article>>{
+       return  newsRepository.getSavedArticle()
+    }
 }
