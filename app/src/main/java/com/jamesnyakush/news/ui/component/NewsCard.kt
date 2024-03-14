@@ -23,7 +23,10 @@ import coil.request.ErrorResult
 import coil.request.ImageRequest
 import coil.request.SuccessResult
 import com.jamesnyakush.news.R
+import com.jamesnyakush.news.getPeriod
+import com.jamesnyakush.news.toDateFormat
 import kotlinx.coroutines.Dispatchers
+import java.util.Date
 
 @Composable
 fun NewsCard(
@@ -105,7 +108,7 @@ fun NewsCard(
         //Published At
         if (publishedAt != null) {
             Text(
-                text = publishedAt,
+                text = getPeriod(publishedAt.toDateFormat()),
                 modifier = Modifier.padding(8.dp),
                 color = Color.Gray,
                 textAlign = TextAlign.Start,
