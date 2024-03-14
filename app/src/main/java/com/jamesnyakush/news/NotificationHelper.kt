@@ -27,11 +27,8 @@ class NotificationHelper(val context: Context) {
         }
        // val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
 
-        val pendingFlags: Int = if (Build.VERSION.SDK_INT >= 23) {
+        val pendingFlags: Int =
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        } else {
-            PendingIntent.FLAG_UPDATE_CURRENT
-        }
         val pendingIntent = PendingIntent.getActivity(context, 0, intent, pendingFlags)
 
         //

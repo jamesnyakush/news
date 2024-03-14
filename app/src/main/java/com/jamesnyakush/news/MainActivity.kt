@@ -6,17 +6,12 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import com.jamesnyakush.news.ui.component.NewsCard
-import com.jamesnyakush.news.ui.component.NewsDetailCard
 import com.jamesnyakush.news.ui.screen.NewsScreen
 import com.jamesnyakush.news.ui.theme.NewsTheme
 import java.util.concurrent.TimeUnit
@@ -44,7 +39,7 @@ class MainActivity : ComponentActivity() {
             .build()
 
         val notificationWorkRequest =
-            PeriodicWorkRequestBuilder<NewsWorker>(15, TimeUnit.MINUTES)
+            PeriodicWorkRequestBuilder<NewsWorker>(1, TimeUnit.MINUTES)
                 .setConstraints(constraints)
                 .build()
 

@@ -16,5 +16,4 @@ interface NewsRepository {
     suspend fun upsertNews(article: List<Article>)
 
     fun getSavedArticle(): Flow<List<Article>>
-
 }
