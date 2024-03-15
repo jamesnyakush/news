@@ -1,5 +1,6 @@
 package com.jamesnyakush.news.ui.component
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -17,6 +18,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import coil.request.CachePolicy
 import coil.request.ErrorResult
@@ -25,6 +28,7 @@ import coil.request.SuccessResult
 import com.jamesnyakush.news.R
 import com.jamesnyakush.news.getPeriod
 import com.jamesnyakush.news.toDateFormat
+import com.jamesnyakush.news.ui.nav.Screen
 import kotlinx.coroutines.Dispatchers
 import java.util.Date
 
@@ -34,17 +38,20 @@ fun NewsCard(
     description: String?,
     urlToImage: String?,
     publishedAt: String?,
+    modifier: Modifier
 ) {
 
     Column(
         modifier = Modifier
             .padding(8.dp)
             .fillMaxWidth()
+
     ) {
         val context = LocalContext.current
         val placeholder = R.drawable.placeholder
         val imageUrl = urlToImage
 
+        //
         // Build an ImageRequest with Coil
         val listener = object : ImageRequest.Listener {
             override fun onError(request: ImageRequest, result: ErrorResult) {
@@ -121,5 +128,5 @@ fun NewsCard(
 @Preview
 @Composable
 fun NewsCardPreview() {
-    NewsCard("", "","","" )
+    NewsCard("", "", "", "", modifier = Modifier)
 }

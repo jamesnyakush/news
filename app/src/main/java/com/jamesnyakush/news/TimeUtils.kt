@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit
  */
 @SuppressLint("SimpleDateFormat")
 fun getPeriod(past: Date): String {
+
     val now = Date()
     val seconds = TimeUnit.MILLISECONDS.toSeconds(now.time - past.time)
     val minutes = TimeUnit.MILLISECONDS.toMinutes(now.time - past.time)
@@ -33,7 +34,7 @@ fun getPeriod(past: Date): String {
 }
 
 /**
- * Parses String to "dd/MM/yyyy HH:mm:ss" date and time format.
+ * Parses String to "yyyy-MM-dd'T'HH:mm:ss" date and time format.
  */
 @SuppressLint("SimpleDateFormat")
 fun String.toDateFormat(): Date {

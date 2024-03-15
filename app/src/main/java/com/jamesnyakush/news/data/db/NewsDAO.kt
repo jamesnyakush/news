@@ -13,7 +13,7 @@ interface NewsDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsertNews(article: List<Article>)
 
-    @Query("select * from article Order by publishedAt DESC")
+    @Query("select * from article Order by publishedAt desc")
     fun getSavedArticle(): Flow<List<Article>>
 
 }
