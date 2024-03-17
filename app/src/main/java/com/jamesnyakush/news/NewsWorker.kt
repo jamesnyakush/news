@@ -1,17 +1,23 @@
 package com.jamesnyakush.news
 
 import android.annotation.SuppressLint
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.media.RingtoneManager
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
+import coil.ImageLoader
+import coil.request.ImageRequest
+import coil.request.SuccessResult
 import com.jamesnyakush.news.data.Response
 import com.jamesnyakush.news.data.repository.NewsRepository
 import kotlinx.coroutines.coroutineScope
@@ -36,28 +42,17 @@ class NewsWorker(
         article.collectLatest { response ->
             when (response) {
                 is Response.Success -> {
-
-                    val title = response.data!!.articles.firstOrNull()?.title
-                    val desc = response.data.articles.firstOrNull()?.description
-                   // val img = response.data.articles.firstOrNull()?.urlToImage
-
-                    for (res in response.data.articles){
+                    for (res in response.data?.articles!!) {
                         showNotification(
                             title = res.title!!,
                             message = res.description!!,
-                            //img = img!!
+                            img = res.urlToImage.toString()
                         )
                     }
-//                    showNotification(
-//                        title = title!!,
-//                        message = desc!!,
-//                        //img = img!!
-//                    )
                     result = Result.success()
                 }
 
                 is Response.Failure -> {
-
                     Timber.d(response.e?.message)
                     result = Result.failure()
                 }
@@ -70,12 +65,9 @@ class NewsWorker(
     }
 
 
-    @SuppressLint("StringFormatInvalid")
-    private fun showNotification(title: String, message: String) {
+    private suspend fun showNotification(title: String, message: String, img: String) {
         val channelId = "reminder_channel_id"
         val channelName = "d"
-
-       // val bitmap = (img as BitmapDrawable).bitmap
 
 
         val intent = Intent(applicationContext, MainActivity::class.java).apply {
@@ -94,17 +86,8 @@ class NewsWorker(
         val notificationBuilder = NotificationCompat.Builder(applicationContext, channelId)
             .setColor(ContextCompat.getColor(applicationContext, R.color.black))
             .setSmallIcon(R.drawable.ic_launcher_background)
-            .setContentTitle(
-                title
-            )
-
-//            .setLargeIcon(bitmap)
-//            .setStyle(
-//                NotificationCompat.BigPictureStyle()
-//                    .bigPicture(bitmap)
-//                //.bigLargeIcon(null)
-//            )
-
+            .setContentTitle(title)
+            .setStyle(NotificationCompat.BigPictureStyle().bigPicture(getBitmap(img)))
             .setContentText(message)
             .setAutoCancel(true)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -125,5 +108,18 @@ class NewsWorker(
         }
 
         notificationManager.notify(0, notificationBuilder.build())
+    }
+
+
+    //Convert url to Bitmap
+    private suspend fun getBitmap(image: String): Bitmap {
+        val loading = ImageLoader(applicationContext)
+        val request = ImageRequest.Builder(applicationContext)
+            .data(image)
+            .build()
+
+        val result = (loading.execute(request = request) as SuccessResult).drawable
+
+        return (result as BitmapDrawable).bitmap
     }
 }

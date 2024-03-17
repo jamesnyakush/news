@@ -38,13 +38,16 @@ fun NewsCard(
     description: String?,
     urlToImage: String?,
     publishedAt: String?,
-    modifier: Modifier
+    navController: NavController
 ) {
 
     Column(
         modifier = Modifier
             .padding(8.dp)
             .fillMaxWidth()
+            .clickable {
+                navController.navigate(Screen.NewsDetail.route)
+            }
 
     ) {
         val context = LocalContext.current
@@ -128,5 +131,5 @@ fun NewsCard(
 @Preview
 @Composable
 fun NewsCardPreview() {
-    NewsCard("", "", "", "", modifier = Modifier)
+    NewsCard("", "", "", "", rememberNavController())
 }
