@@ -41,3 +41,8 @@ fun String.toDateFormat(): Date {
     return SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
         .parse(this)
 }
+
+object Payload{
+    const val apiKey ="75cdd7daba1e4339b7cbccfe40a620b6"
+    const val country ="us"
+}

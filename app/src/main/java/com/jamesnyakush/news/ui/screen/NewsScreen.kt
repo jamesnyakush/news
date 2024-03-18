@@ -29,7 +29,7 @@ fun NewsScreen(
     val all = vm.getArticles().collectAsState(initial = emptyList())
 
     LaunchedEffect(Unit) {
-        vm.getTopHeadlines("us", "75cdd7daba1e4339b7cbccfe40a620b6")
+        vm.getTopHeadlines()
     }
 
 

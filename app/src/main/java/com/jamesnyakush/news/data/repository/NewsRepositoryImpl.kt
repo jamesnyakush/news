@@ -12,7 +12,8 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 
 class NewsRepositoryImpl constructor(
-    private var apiClient: ApiClient, private val newsDAO: NewsDAO
+    private var apiClient: ApiClient,
+    private val newsDAO: NewsDAO
 ) : NewsRepository {
     override suspend fun getTopHeadlines(
         country: String, apiKey: String

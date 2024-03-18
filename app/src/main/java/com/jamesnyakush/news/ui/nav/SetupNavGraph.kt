@@ -7,6 +7,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import androidx.navigation.navDeepLink
 import com.google.gson.Gson
 import com.jamesnyakush.news.data.model.Article
 import com.jamesnyakush.news.ui.screen.NewsDetailScreen
@@ -31,6 +32,9 @@ fun SetupNavGraph(
 
         composable(
             route = Screen.NewsDetail.route,
+//            deepLinks = listOf(
+//                navDeepLink { uriPattern = "myapp://${Screen.NewsDetail.route}" }
+//            )
         ) {
 
             val article =

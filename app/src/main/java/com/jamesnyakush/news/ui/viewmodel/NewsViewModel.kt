@@ -15,19 +15,16 @@ class NewsViewModel(
     private val newsRepository: NewsRepository
 ) : ViewModel() {
 
-
     private val _newsResponse = mutableStateOf<Response<NewsResponse>>(
         Response.Success(null)
     )
 
     val newsResponse: State<Response<NewsResponse>> = _newsResponse
 
-    fun getTopHeadlines(
-        country: String, apiKey: String
-    ) = viewModelScope.launch {
+    fun getTopHeadlines() = viewModelScope.launch {
 
         newsRepository.getTopHeadlines(
-            country = country, apiKey = apiKey
+            country = Payload.country, apiKey = Payload.apiKey
         ).collect { response ->
             _newsResponse.value = response
         }

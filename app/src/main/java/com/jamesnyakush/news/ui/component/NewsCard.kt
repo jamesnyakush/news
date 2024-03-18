@@ -60,7 +60,6 @@ fun NewsCard(
                 }
             }
 
-
             val imageRequest = ImageRequest.Builder(context)
                 .data(imageUrl)
                 .listener(listener)
