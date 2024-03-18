@@ -20,7 +20,6 @@ import coil.request.SuccessResult
 import com.jamesnyakush.news.data.Response
 import com.jamesnyakush.news.data.model.Article
 import com.jamesnyakush.news.data.repository.NewsRepository
-import com.jamesnyakush.news.ui.viewmodel.Payload
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.core.component.KoinComponent

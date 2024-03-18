@@ -1,6 +1,7 @@
 package com.jamesnyakush.news
 
 import android.app.Application
+import androidx.work.Configuration
 import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.NetworkType
@@ -20,7 +21,7 @@ import org.koin.core.module.Module
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
-class News : Application(), ImageLoaderFactory {
+class News : Application(), ImageLoaderFactory , Configuration.Provider{
 
     override fun onCreate() {
         super.onCreate()
@@ -75,4 +76,10 @@ class News : Application(), ImageLoaderFactory {
             .respectCacheHeaders(false)
             .build()
     }
+
+    override val workManagerConfiguration: Configuration
+        get() = Configuration.Builder()
+            .setMinimumLoggingLevel(if (BuildConfig.DEBUG) android.util.Log.DEBUG else android.util.Log.ERROR)
+            .build()
+
 }
