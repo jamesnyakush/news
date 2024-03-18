@@ -31,28 +31,13 @@ fun SetupNavGraph(
 
         composable(
             route = Screen.NewsDetail.route,
-            arguments = listOf(
-                navArgument("article") {
-                    //type = ProfileArgType()
-                }
-            )
-        ) { backStackEntry ->
+        ) {
 
-//            backStackEntry.arguments?.getString("article")?.let {
-//                val article =  Gson().fromJson(it, Article::class.java)
-//                NewsDetailScreen(article = article!!)
-//            }
-
+            val article =
+                navHostController.previousBackStackEntry?.savedStateHandle?.get<Article>("article")
+                    ?: Article()
+            NewsDetailScreen(article = article)
 
         }
-
-//        composable(
-//            route = Screen.NewsDetail.route
-//        ) {
-//
-//            val rsl =
-//                navHostController.previousBackStackEntry?.savedStateHandle?.get<Article>("article")
-//            NewsDetailScreen(article = article!!)
-//        }
     }
 }

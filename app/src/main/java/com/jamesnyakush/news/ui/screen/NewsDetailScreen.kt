@@ -135,13 +135,15 @@ fun NewsDetailScreen(
                     style = TextStyle.Default
                 )
 
-                Text(
-                    text = article.author!!,
-                    modifier = Modifier.padding(8.dp),
-                    color = Color.DarkGray,
-                    textAlign = TextAlign.Start,
-                    fontSize = 16.sp
-                )
+                article.author?.let {
+                    Text(
+                        text = it,
+                        modifier = Modifier.padding(8.dp),
+                        color = Color.DarkGray,
+                        textAlign = TextAlign.Start,
+                        fontSize = 16.sp
+                    )
+                }
             }
         }
 

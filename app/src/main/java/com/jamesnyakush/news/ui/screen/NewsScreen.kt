@@ -1,6 +1,7 @@
 package com.jamesnyakush.news.ui.screen
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -33,11 +34,11 @@ fun NewsScreen(
 
 
     fun navigateToDetail(article: Article) {
-
-        val articleJson = Gson().toJson(article)
+        navController.currentBackStackEntry?.savedStateHandle?.apply {
+            set("article", article)
+        }
 
         navController.navigate(Screen.NewsDetail.route)
-
     }
 
     if (vm.newsResponse.value != null) {
@@ -50,13 +51,17 @@ fun NewsScreen(
                 LazyColumn {
                     newsResponse.data?.articles?.let { articles ->
                         items(articles) { article ->
-                            NewsCard(
-                                article = article,
-                            )
+
+                            Box(
+                                modifier = Modifier.clickable(onClick = { navigateToDetail(article) })
+                            ) {
+                                NewsCard(
+                                    article = article,
+                                )
+                            }
                         }
                         vm.upsert(articles)
                     }
-
                 }
             }
 
@@ -66,9 +71,13 @@ fun NewsScreen(
     } else {
         LazyColumn {
             items(all.value) { article ->
-                NewsCard(
-                    article = article,
-                )
+                Box(
+                    modifier = Modifier.clickable(onClick = { navigateToDetail(article) })
+                ) {
+                    NewsCard(
+                        article = article,
+                    )
+                }
             }
         }
     }
