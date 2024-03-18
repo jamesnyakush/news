@@ -1,7 +1,5 @@
 package com.jamesnyakush.news
 
-import android.annotation.SuppressLint
-import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -25,6 +23,7 @@ import kotlinx.coroutines.flow.collectLatest
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import timber.log.Timber
+import java.util.Date
 
 
 class NewsWorker(
@@ -46,7 +45,7 @@ class NewsWorker(
                         showNotification(
                             title = res.title!!,
                             message = res.description!!,
-                            img = res.urlToImage.toString()
+                            img = res.urlToImage!!
                         )
                     }
                     result = Result.success()
@@ -54,6 +53,7 @@ class NewsWorker(
 
                 is Response.Failure -> {
                     Timber.d(response.e?.message)
+                    Timber.d(response.e?.localizedMessage.toString())
                     result = Result.failure()
                 }
 
@@ -65,7 +65,7 @@ class NewsWorker(
     }
 
 
-    private suspend fun showNotification(title: String, message: String, img: String) {
+    private suspend fun showNotification(title: String, message: String, img: String?) {
         val channelId = "reminder_channel_id"
         val channelName = "d"
 
@@ -112,10 +112,10 @@ class NewsWorker(
 
 
     //Convert url to Bitmap
-    private suspend fun getBitmap(image: String): Bitmap {
+    private suspend fun getBitmap(image: String?): Bitmap {
         val loading = ImageLoader(applicationContext)
         val request = ImageRequest.Builder(applicationContext)
-            .data(image)
+            .data(image!!)
             .build()
 
         val result = (loading.execute(request = request) as SuccessResult).drawable

@@ -1,14 +1,21 @@
 package com.jamesnyakush.news.ui.screen
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import com.google.gson.Gson
 import com.jamesnyakush.news.data.Response
+import com.jamesnyakush.news.data.model.Article
 import com.jamesnyakush.news.ui.component.NewsCard
+import com.jamesnyakush.news.ui.nav.Screen
 import com.jamesnyakush.news.ui.viewmodel.NewsViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -18,31 +25,22 @@ fun NewsScreen(
 ) {
     val vm = koinViewModel<NewsViewModel>()
 
+    val all = vm.getArticles().collectAsState(initial = emptyList())
+
     LaunchedEffect(Unit) {
         vm.getTopHeadlines("us", "75cdd7daba1e4339b7cbccfe40a620b6")
     }
 
 
-    val all = vm.getArticles().collectAsState(initial = emptyList())
+    fun navigateToDetail(article: Article) {
 
-    if (all.value.isNotEmpty()) {
+        val articleJson = Gson().toJson(article)
 
-        LazyColumn {
-            items(all.value) { article ->
-                if (article.title != "[Removed]") {
-                    NewsCard(
-                        title = article.title,
-                        description = article.description,
-                        urlToImage = article.urlToImage,
-                        publishedAt = article.publishedAt,
-                        navController = navController
-                    )
-                }
-            }
-        }
+        navController.navigate(Screen.NewsDetail.route)
 
+    }
 
-    } else {
+    if (vm.newsResponse.value != null) {
         when (val newsResponse = vm.newsResponse.value) {
             is Response.Loading -> {
                 Text(text = "Loading")
@@ -52,17 +50,9 @@ fun NewsScreen(
                 LazyColumn {
                     newsResponse.data?.articles?.let { articles ->
                         items(articles) { article ->
-
-                            if (article.title != "[Removed]") {
-                                NewsCard(
-                                    title = article.title,
-                                    description = article.description,
-                                    urlToImage = article.urlToImage,
-                                    publishedAt = article.publishedAt,
-                                    navController = navController
-                                )
-                            }
-
+                            NewsCard(
+                                article = article,
+                            )
                         }
                         vm.upsert(articles)
                     }
@@ -72,12 +62,14 @@ fun NewsScreen(
 
             is Response.Failure -> {}
         }
+
+    } else {
+        LazyColumn {
+            items(all.value) { article ->
+                NewsCard(
+                    article = article,
+                )
+            }
+        }
     }
-
 }
-
-
-
-
-
-
