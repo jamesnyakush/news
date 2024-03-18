@@ -4,6 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.jamesnyakush.news.Payload
 import com.jamesnyakush.news.data.Response
 import com.jamesnyakush.news.data.model.Article
 import com.jamesnyakush.news.data.model.NewsResponse
