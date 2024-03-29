@@ -41,44 +41,29 @@ fun NewsScreen(
         navController.navigate(Screen.NewsDetail.route)
     }
 
-    if (vm.newsResponse.value != null) {
-        when (val newsResponse = vm.newsResponse.value) {
-            is Response.Loading -> {
-                Text(text = "Loading")
-            }
+    when (val newsResponse = vm.newsResponse.value) {
+        is Response.Loading -> {
+            Text(text = "Loading")
+        }
 
-            is Response.Success -> {
-                LazyColumn {
-                    newsResponse.data?.articles?.let { articles ->
-                        items(articles) { article ->
+        is Response.Success -> {
+            LazyColumn {
+                newsResponse.data?.articles?.let { articles ->
+                    items(articles) { article ->
 
-                            Box(
-                                modifier = Modifier.clickable(onClick = { navigateToDetail(article) })
-                            ) {
-                                NewsCard(
-                                    article = article,
-                                )
-                            }
+                        Box(
+                            modifier = Modifier.clickable(onClick = { navigateToDetail(article) })
+                        ) {
+                            NewsCard(
+                                article = article,
+                            )
                         }
-                        vm.upsert(articles)
                     }
-                }
-            }
-
-            is Response.Failure -> {}
-        }
-
-    } else {
-        LazyColumn {
-            items(all.value) { article ->
-                Box(
-                    modifier = Modifier.clickable(onClick = { navigateToDetail(article) })
-                ) {
-                    NewsCard(
-                        article = article,
-                    )
+                    vm.upsert(articles)
                 }
             }
         }
+
+        is Response.Failure -> {}
     }
 }
