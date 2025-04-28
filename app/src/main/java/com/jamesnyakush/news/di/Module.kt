@@ -1,11 +1,10 @@
-package com.jamesnyakush.news
+package com.jamesnyakush.news.di
 
 import androidx.room.Room
 import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.chuckerteam.chucker.api.RetentionManager
 import com.google.gson.GsonBuilder
-import com.jamesnyakush.news.data.db.NewsDAO
 import com.jamesnyakush.news.data.db.NewsDB
 import com.jamesnyakush.news.data.network.ApiClient
 import com.jamesnyakush.news.data.repository.NewsRepository

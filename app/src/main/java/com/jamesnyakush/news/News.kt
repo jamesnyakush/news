@@ -12,6 +12,9 @@ import coil.ImageLoaderFactory
 import coil.disk.DiskCache
 import coil.memory.MemoryCache
 import coil.util.DebugLogger
+import com.jamesnyakush.news.di.dataModule
+import com.jamesnyakush.news.di.dbModule
+import com.jamesnyakush.news.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -28,6 +31,7 @@ class News : Application(), ImageLoaderFactory , Configuration.Provider{
 
         initKoin()
         initTimber()
+        initWorker()
     }
 
     private fun initKoin() {
@@ -75,6 +79,24 @@ class News : Application(), ImageLoaderFactory , Configuration.Provider{
             .logger(DebugLogger())
             .respectCacheHeaders(false)
             .build()
+    }
+
+
+    private fun initWorker() {
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
+
+        val notificationWorkRequest =
+            PeriodicWorkRequestBuilder<NewsWorker>(15, TimeUnit.MINUTES)
+                .setConstraints(constraints)
+                .build()
+
+        WorkManager.getInstance(applicationContext).enqueueUniquePeriodicWork(
+            "notificationWorkTag",
+            ExistingPeriodicWorkPolicy.KEEP,
+            notificationWorkRequest
+        )
     }
 
     override val workManagerConfiguration: Configuration

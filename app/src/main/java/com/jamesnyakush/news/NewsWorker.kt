@@ -11,7 +11,6 @@ import android.media.RingtoneManager
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
-import androidx.core.net.toUri
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import coil.ImageLoader
@@ -25,7 +24,6 @@ import kotlinx.coroutines.flow.collectLatest
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import timber.log.Timber
-import java.util.Date
 
 
 class NewsWorker(
@@ -52,7 +50,7 @@ class NewsWorker(
                 }
 
                 is Response.Failure -> {
-                    Timber.d(response.e?.message)
+                    Timber.d(response.e)
                     Timber.d(response.e?.localizedMessage.toString())
                     result = Result.failure()
                 }
@@ -74,14 +72,6 @@ class NewsWorker(
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
 
-
-//        val intent = Intent(
-//            Intent.ACTION_VIEW,
-//            "myapp://news_detail".toUri(),
-//
-//        ).apply {
-//            putExtra(Intent.EXTRA_TEXT, article)
-//        }
         val pendingFlags: Int =
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
 

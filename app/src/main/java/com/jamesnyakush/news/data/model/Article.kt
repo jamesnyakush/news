@@ -1,13 +1,9 @@
 package com.jamesnyakush.news.data.model
 
-import android.net.Uri
 import android.os.Parcel
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.google.gson.Gson
-import org.jetbrains.annotations.Nullable
-import java.io.Serializable
 
 @Entity
 data class Article(
