@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 
-class NewsRepositoryImpl constructor(
+class NewsRepositoryImpl(
     private var apiClient: ApiClient,
     private val newsDAO: NewsDAO
 ) : NewsRepository {
