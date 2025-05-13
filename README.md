@@ -16,10 +16,20 @@ Docs Coming Soon
 - Search history to keep track of previous searches.
 - Share functionality to share articles via social media or email.
 
+### Frontend
+
 ## Technologies Used
 
+## Getting Started
+1. Clone the repository:
+   ```bash
+   git clone 
+   ```
 
-##License
+## Contributing
+
+
+## License
 ```
 Copyright (c) 2025 James Nyakundi
 
