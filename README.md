@@ -1,5 +1,6 @@
 # News App
-Docs Coming Soon
+This is a simple news application that fetches articles from the News API and displays them in a user-friendly interface.
+The app allows users to search for articles by keyword, filter them by category, and view detailed information about each article.
 
 ## Features
 - Fetches news articles from the News API.
@@ -16,15 +17,16 @@ Docs Coming Soon
 - Search history to keep track of previous searches.
 - Share functionality to share articles via social media or email.
 
-### Frontend
+## Frontend
 
 ## Technologies Used
 
 ## Getting Started
-1. Clone the repository:
-   ```bash
-   git clone 
-   ```
+To run the project locally, follow these steps:
+
+1. Open Android Studio.
+2. Click on "Get from Version Control".
+3. Enter the repository URL: `git@github.com:jamesnyakush/news.git`
 
 ## Contributing
 
