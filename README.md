@@ -1,7 +1,25 @@
 # News App
 Docs Coming Soon
 
+## Features
+- Fetches news articles from the News API.
+- Displays articles in a user-friendly interface.
+- Supports searching for articles by keyword.
+- Allows users to filter articles by category.
+- Provides a detailed view of each article.
+- Responsive design for mobile and desktop devices.
+- Dark mode support.
+- Bookmarking functionality for saving favorite articles.
+- Pagination for easy navigation through articles.
+- Error handling for network issues and API errors.
+- Loading indicators for better user experience.
+- Search history to keep track of previous searches.
+- Share functionality to share articles via social media or email.
 
+## Technologies Used
+
+
+##License
 ```
 Copyright (c) 2025 James Nyakundi
 
