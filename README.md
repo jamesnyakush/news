@@ -17,7 +17,7 @@ The app allows users to search for articles by keyword, filter them by category,
 - Search history to keep track of previous searches.
 - Share functionality to share articles via social media or email.
 
-## Frontend
+## Screenshots
 
 ## Technologies Used
 
